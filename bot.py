@@ -5,7 +5,7 @@ import json
 import random
 from dotenv import load_dotenv
 from twilio.rest import Client
-import re
+import oxford
 
 #TOKEN=os.environ['DISCORD_TOKEN']
 #GUILD=os.environ['DISCORD_GUILD']
@@ -20,7 +20,7 @@ twilclient=Client(TWILIO_SID,TWILIO_TOKEN)
 
 sad_words=['sad','unhappy','miserable','depressed','angry','depressing']
 
-curse_words=['bhosdike','madarchod','bkl','bkc','behen ke lode','motherfucker','sisterfucker','harami','jhaantu','jhantu','chutiya','chutiye','bhnchod','behenchod''bhosadpappu','bakchod','kutta','kameena','chadarmod']
+curse_words=['bhosdike','madarchod','bc','bkl','bkc','behen ke lode','motherfucker','sisterfucker','harami','jhaantu','jhantu','chutiya','chutiye','bhnchod','behenchod''bhosadpappu','bakchod','kutta','kameena','chadarmod']
 
 starter_encouragements=[
   'Cheer Up!',
@@ -37,7 +37,7 @@ curse_replies=[
   'Tu hoga chutiya',
   'Harami saala',
   'Jo bolta hai wohi hota hai',
-  'Aur gaaliya nahi aati!',
+  'Aur gaaliya nahi aati?',
   'Izzat se baat kar, bot hu mai',
   'Bot ke samne gaali nahi',
   'Lund pakar ke jhul jaa',
@@ -92,5 +92,13 @@ async def on_message(message):
 			body=body,
 			to='whatsapp:+919939795774')
 		print(tosend.sid)
+
+	if msg.startswith('$define'):
+		text=msg.split()[1]
+		mean=oxford.meaning(text)
+		if mean==-1:
+			await message.channel.send("Definition Not Found")
+		else:
+			await message.channel.send(mean)
 
 client.run(TOKEN)
