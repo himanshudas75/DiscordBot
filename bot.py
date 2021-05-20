@@ -63,7 +63,7 @@ async def on_ready():
 	print(f'Guild Members:\n - {members}')
 	
 	channel=client.get_channel(841739053312901163)
-	await channel.send("Hey! I am online.")
+	await channel.send("Quiz ke time gussa aye to gaali dena")
 
 @client.event
 async def on_message(message):
@@ -85,12 +85,12 @@ async def on_message(message):
 
 	if msg.startswith('$send'):
 		text=msg.split()
-		phone=text[1]
-		body=' '.join(text[2:])
+		#phone=text[1]
+		body=' '.join(text[1:])
 		tosend=twilclient.messages.create(
-			messaging_service_sid='MGeb03cef1c88b929274260414c57ed8c5',
+			from_='whatsapp:+14155238886',
 			body=body,
-			to=phone)
+			to='whatsapp:+919939795774')
 		print(tosend.sid)
 
 client.run(TOKEN)
