@@ -5,12 +5,16 @@ import json
 import random
 from dotenv import load_dotenv
 
+#TOKEN=os.environ['DISCORD_TOKEN']
+#GUILD=os.environ['DISCORD_GUILD']
 load_dotenv()
 TOKEN=os.getenv('DISCORD_TOKEN')
 GUILD=os.getenv('DISCORD_GUILD')
 client=discord.Client()
 
 sad_words=['sad','unhappy','miserable','depressed','angry','depressing']
+
+curse_words=['bhosdike','madarchod','bkl','bkc','behen ke lode','motherfucker','sisterfucker','harami','jhaantu','jhantu','chutiya','chutiye','bhnchod','behenchod''bhosadpappu','bakchod','kutta','kameena','chadarmod']
 
 starter_encouragements=[
   'Cheer Up!',
@@ -21,6 +25,20 @@ starter_encouragements=[
   'Your day is gonna be super great!'
 ]
 
+curse_replies=[
+  'Aji Lund Mera!',
+  'Gaand me goli lagegi ab',
+  'Tu hoga chutiya',
+  'Harami saala',
+  'Jo bolta hai wohi hota hai',
+  'Aur gaaliya nahi aati!',
+  'Izzat se baat kar, bot hu mai',
+  'Bot ke samne gaali nahi',
+  'Lund pakar ke jhul jaa',
+  'Ye kya chutiyapa kar rha hai',
+  'Nikalna hai idhr se?',
+  'Chadarmod']
+  
 def get_quote():
 	response=requests.get("https://zenquotes.io/api/random")
 	json_data=json.loads(response.text)
@@ -54,6 +72,9 @@ async def on_message(message):
 
 	if any(word in msg.lower() for word in sad_words):
 		await message.channel.send(random.choice(starter_encouragements))
+	
+	if any(word in msg.lower() for word in curse_words):
+	  await message.channel.send(random.choice(curse_replies))
 
 
 client.run(TOKEN)
