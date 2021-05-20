@@ -4,13 +4,19 @@ import requests
 import json
 import random
 from dotenv import load_dotenv
+from twilio.rest import Client
+import re
 
 #TOKEN=os.environ['DISCORD_TOKEN']
 #GUILD=os.environ['DISCORD_GUILD']
 load_dotenv()
 TOKEN=os.getenv('DISCORD_TOKEN')
 GUILD=os.getenv('DISCORD_GUILD')
-client=discord.Client()
+TWILIO_SID=os.getenv('TWILIO_SID')
+TWILIO_TOKEN=os.getenv('TWILIO_TOKEN')
+intents=discord.Intents().all()
+client=discord.Client(intents=intents)
+twilclient=Client(TWILIO_SID,TWILIO_TOKEN)
 
 sad_words=['sad','unhappy','miserable','depressed','angry','depressing']
 
@@ -55,6 +61,7 @@ async def on_ready():
 
 	members='\n - '.join([member.name for member in guild.members])
 	print(f'Guild Members:\n - {members}')
+	
 	channel=client.get_channel(841739053312901163)
 	await channel.send("Hey! I am online.")
 
@@ -74,7 +81,16 @@ async def on_message(message):
 		await message.channel.send(random.choice(starter_encouragements))
 	
 	if any(word in msg.lower() for word in curse_words):
-	  await message.channel.send(random.choice(curse_replies))
+		await message.channel.send(random.choice(curse_replies))
 
+	if msg.startswith('$send'):
+		text=msg.split()
+		phone=text[1]
+		body=' '.join(text[2:])
+		tosend=twilclient.messages.create(
+			messaging_service_sid='MGeb03cef1c88b929274260414c57ed8c5',
+			body=body,
+			to=phone)
+		print(tosend.sid)
 
 client.run(TOKEN)
