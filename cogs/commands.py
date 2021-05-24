@@ -59,8 +59,23 @@ class Commands(commands.Cog):
 	@commands.command(name='wolfram',help='Answer queries')
 	async def wolfram(self,ctx,*,args=''):
 		from bot_commands import wolfram
-		ans=wolfram.solve(args)
-		await ctx.send(ans)
+		answer=wolfram.solve(args)
+		for ans in answer:
+			if ans['title'].lower()=='Input interpretation':
+				print('a')
+				continue
+			emb1=discord.Embed(title=ans['title'])
+			await ctx.send(embed=emb1)
+			for i in range(len(ans['text'])):
+				emb=discord.Embed()
+				if not ans['text'][i]==None:
+					emb.add_field(name='.',value=ans['text'][i])
+				try:
+					emb.set_image(url=ans['image'][i])
+				except:
+					print('Error')
+				finally:
+					await ctx.send(embed=emb)
 		
 def setup(bot):
 	bot.add_cog(Commands(bot))

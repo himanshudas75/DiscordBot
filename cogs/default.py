@@ -25,15 +25,6 @@ class Default(commands.Cog):
 	async def on_member_join(self,member):
 		await member.create_dm()
 		await member.dm_channel.send(f'Hi {member.name}, welcome to my Discord Server!')
-
-	@commands.Cog.listener()
-	async def on_message(self,message):
-		bot=self.bot
-		if message.author.id == bot.user.id:
-			return
-		if message.author.bot:
-			message.channel.send("Tum bot ho")
-		await bot.process_commands(message)
-
+    
 def setup(bot):
 	bot.add_cog(Default(bot))

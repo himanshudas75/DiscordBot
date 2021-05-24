@@ -1,11 +1,9 @@
 import requests
 import json
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
-app_id=os.getenv('OXFORD_APPID')
-app_key=os.getenv('OXFORD_APPKEY')
+app_id=os.environ['OXFORD_APPID']
+app_key=os.environ['OXFORD_APPKEY']
 
 def word_id_find(word_id,language='en'):
 	url='https://od-api.oxforddictionaries.com:443/api/v2/lemmas/' + language + '/' + word_id.lower()
@@ -31,9 +29,8 @@ def meaning(word,language='en-gb',fields='definitions',strictMatch='false'):
 		mean={
 		"id":json_data['id'],
 		"language":json_data['language'],
-		"definition":'\n - '.join(deflist)
+		"definition":deflist[0]
 		}
-		answer='id: '+mean['id']+'\nlanguage: '+mean['language']+'\ndefinition(s):\n - '+mean['definition']
-		return answer
+		return mean
 	else:
 		return -1
