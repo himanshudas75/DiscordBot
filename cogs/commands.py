@@ -56,9 +56,11 @@ class Commands(commands.Cog):
 
 			await ctx.send(embed=detembed)
 
-	@commands.command(name='text',help='Debugging purpose ignore')
-	async def text(self,ctx,*,args):
-		print(args)
-
+	@commands.command(name='wolfram',help='Answer queries')
+	async def wolfram(self,ctx,*,args=''):
+		from bot_commands import wolfram
+		ans=wolfram.solve(args)
+		await ctx.send(ans)
+		
 def setup(bot):
 	bot.add_cog(Commands(bot))
