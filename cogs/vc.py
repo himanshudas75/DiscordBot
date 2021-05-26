@@ -14,7 +14,8 @@ class VC(commands.Cog):
         if ctx.author.voice:
             channel=ctx.author.voice.channel
             await channel.connect()
-            await ctx.send(f'Joined VC {channel}')
+            emb=discord.Embed(title=f'Joined VC {channel}')
+            await ctx.send(embed=emb)
         else:
             await ctx.send('Join a VC first!')
     
@@ -23,7 +24,8 @@ class VC(commands.Cog):
         if ctx.voice_client:
             vc=ctx.voice_client
             await vc.disconnect()
-            await ctx.send(f'Disconnected from VC')
+            emb=discord.Embed(title='Disconnected from VC')
+            await ctx.send(embed=emb)
         else:
             await ctx.send('I am not in a VC!')
     
@@ -40,10 +42,12 @@ class VC(commands.Cog):
         found=False
         for filename in os.listdir('./audios'):
             name=re.findall('\w+',filename)[0]
+            if name=='gitignore':
+                continue
             if args.lower() == name.lower():
                 found=filename
                 break
-        if not found or found=='gitignore':
+        if not found:
             await ctx.send('Song not found')
             return
 
