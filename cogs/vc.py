@@ -9,7 +9,7 @@ class VC(commands.Cog):
     def __init__(self,bot):
         self.bot=bot
 
-    @commands.command()
+    @commands.command(name='join',help='Make bot join a VC')
     async def join(self,ctx):
         if ctx.author.voice:
             channel=ctx.author.voice.channel
@@ -18,7 +18,7 @@ class VC(commands.Cog):
         else:
             await ctx.send('Join a VC first!')
     
-    @commands.command()
+    @commands.command(name='leave',help='Make bot leave the VC')
     async def leave(self,ctx):
         if ctx.voice_client:
             vc=ctx.voice_client
@@ -27,7 +27,7 @@ class VC(commands.Cog):
         else:
             await ctx.send('I am not in a VC!')
     
-    @commands.command()
+    @commands.command(name='play',help='Play an audio')
     async def play(self,ctx,*,args):
         bot=self.bot
         if not ctx.author.voice:
@@ -43,7 +43,7 @@ class VC(commands.Cog):
             if args.lower() == name.lower():
                 found=filename
                 break
-        if not found:
+        if not found or found=='gitignore':
             await ctx.send('Song not found')
             return
 
@@ -51,8 +51,16 @@ class VC(commands.Cog):
         voice=discord.utils.get(bot.voice_clients,guild=ctx.guild)
         voice.play(source)
     
-    @commands.command()
+    @commands.command(name='list',help='List the songs in directory')
+    async def _list(self,ctx):
+        li=[]
+        for filename in os.listdir('./audios'):
+            name=re.findall('\w+',filename)[0]
+            if name=='gitignore':
+                continue
+            li.append(name)
+        li=', '.join(li)
+        await ctx.send(li)
 
-			
 def setup(bot):
-	bot.add_cog(VC(bot))
+    bot.add_cog(VC(bot))
