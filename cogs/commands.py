@@ -57,25 +57,25 @@ class Commands(commands.Cog):
 			await ctx.send(embed=detembed)
 
 	@commands.command(name='wolfram',help='Answer queries')
-	async def wolfram(self,ctx,*,args=''):
+	async def wolfram(self,ctx,*,args=''):	#Wolfram
 		from bot_commands import wolfram
 		answer=wolfram.solve(args)
 		for ans in answer:
 			if ans['title'].lower()=='Input interpretation':
-				print('a')
 				continue
 			emb1=discord.Embed(title=ans['title'])
-			await ctx.send(embed=emb1)
-			for i in range(len(ans['text'])):
-				emb=discord.Embed()
-				if not ans['text'][i]==None:
-					emb.add_field(name='.',value=ans['text'][i])
-				try:
-					emb.set_image(url=ans['image'][i])
-				except:
-					print('Error')
-				finally:
-					await ctx.send(embed=emb)
+			for i in range(len(ans['image'])):
+				if i==0:
+					emb1.set_image(url=ans['image'][i])
+					await ctx.send(embed=emb1)
+				else:
+					emb=discord.Embed()
+					try:
+						emb.set_image(url=ans['image'][i])
+					except:
+						print('Error')
+					finally:
+						await ctx.send(embed=emb)
 		
 def setup(bot):
 	bot.add_cog(Commands(bot))
