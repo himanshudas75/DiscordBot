@@ -4,12 +4,12 @@ import re
 import json
 import urllib.parse
 
-'''
+
 from dotenv import load_dotenv
 load_dotenv()
 KEY=os.getenv('OMDB_KEY')
-'''
-KEY=os.environ['OMDB_KEY']
+
+#KEY=os.environ['OMDB_KEY']
 
 def omdb(t,y,typ):
 	u='http://www.omdbapi.com/'+t+y+typ+'&apikey='+KEY

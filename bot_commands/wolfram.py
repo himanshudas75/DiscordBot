@@ -1,11 +1,12 @@
 import os
 import wolframalpha
-'''
+
 from dotenv import load_dotenv
 load_dotenv()
 APPID=os.getenv('WOLFRAM_APPID')
-'''
-APPID=os.environ['WOLFRAM_APPID']
+
+
+#APPID=os.environ['WOLFRAM_APPID']
 
 def solve(query):
 	client=wolframalpha.Client(APPID)
