@@ -7,10 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 TOKEN=os.getenv('DISCORD_TOKEN')
 GUILD=os.getenv('DISCORD_GUILD')
-'''
-from keep_alive import keep_alive
-TOKEN=os.environ['DISCORD_TOKEN']
-'''
 
 intents=discord.Intents().all()
 bot=commands.Bot(command_prefix='.',intents=intents)
@@ -42,6 +38,5 @@ async def reload(ctx,extension):
 for filename in os.listdir('./cogs'):
 	if filename.endswith('.py'):
 		bot.load_extension(f'cogs.{filename[:-3]}')
-
 #keep_alive()
 bot.run(TOKEN)
