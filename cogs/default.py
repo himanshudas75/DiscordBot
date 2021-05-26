@@ -19,7 +19,9 @@ class Default(commands.Cog):
 
 	@commands.Cog.listener()
 	async def on_command_error(self,ctx,error):
-		await ctx.send(error)
+		from error_handling import get_error
+		er=get_error(error)
+		await ctx.send(er)
 
 	@commands.Cog.listener()
 	async def on_member_join(self,member):
