@@ -2,7 +2,8 @@ import discord
 from discord.ext import commands
 from discord import FFmpegPCMAudio
 import os
-import re
+
+queue={}
 
 class VC(commands.Cog):
 
@@ -26,6 +27,12 @@ class VC(commands.Cog):
                 continue
             li.append(filename)
         return li
+    
+    def add_queue(self,name,id):
+        if id in queue:
+            queue[id].append(name)
+        else:
+            queue[id]=[name]
 
     @commands.command(name='join',help='Make bot join a VC')
     async def join(self,ctx):
@@ -70,7 +77,7 @@ class VC(commands.Cog):
         if not isinstance(ch, str):
             await ctx.send(embed=ch)
             return
-
+        
         found=False
         li=self.get_list()
         if args.isnumeric():
@@ -93,9 +100,14 @@ class VC(commands.Cog):
 
         source=FFmpegPCMAudio(f'./audios/{li[toplay-1]}')
         voice=ctx.voice_client
-        voice.play(source)
-        emb=discord.Embed(title=bot.user.name,description=f'Now Playing **{li[toplay-1].split(".")[0]}**')
-        await ctx.send(embed=emb)
+        if voice.is_playing():
+            self.add_queue(li[toplay-1].split(".")[0],ctx.message.guild.id)
+            emb=discord.Embed(title=bot.user.name,description=f'**{li[toplay-1].split(".")[0]}** added to queue')
+            await ctx.send(embed=emb)
+        else:
+            voice.play(source)
+            emb=discord.Embed(title=bot.user.name,description=f'Now Playing **{li[toplay-1].split(".")[0]}**')
+            await ctx.send(embed=emb)
 
     @commands.command(name='pause',help='Pause the player')
     async def pause(self,ctx):
