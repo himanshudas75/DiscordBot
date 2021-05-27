@@ -70,12 +70,8 @@ class Commands(commands.Cog):
 					await ctx.send(embed=emb1)
 				else:
 					emb=discord.Embed()
-					try:
-						emb.set_image(url=ans['image'][i])
-					except:
-						print('Error')
-					finally:
-						await ctx.send(embed=emb)
+					emb.set_image(url=ans['image'][i])
+					await ctx.send(embed=emb)
 		
 def setup(bot):
 	bot.add_cog(Commands(bot))
