@@ -16,23 +16,6 @@ class Default(commands.Cog):
 			for channel in guild.channels:
 				if channel.name=='general':
 					await channel.send('Hey! I am online.')
-					#print('Hello')
-	
-	@commands.Cog.listener()
-	async def on_guild_join(self,guild):
-		with open('queue_list.json','r') as f:
-			queuelist=json.load(f)
-		queuelist[str(guild.id)]=[]
-		with open('queue_list.json','w') as f:
-			json.dump(queuelist,f,indent=4)
-	
-	@commands.Cog.listener()
-	async def on_guild_remove(self,guild):
-		with open('queue_list.json','r') as f:
-			queuelist=json.load(f)
-		queuelist.pop(str(guild.id))
-		with open('queue_list.json','w') as f:
-			json.dump(queuelist,f,indent=4)
 
 	@commands.Cog.listener()
 	async def on_command_error(self,ctx,error):
