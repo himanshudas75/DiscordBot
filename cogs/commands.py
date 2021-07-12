@@ -23,13 +23,6 @@ class Commands(commands.Cog):
 		bot=self.bot
 		await ctx.send(f'Pong! : {round(bot.latency*1000)}ms')
 
-	@commands.command(name='inspire',help='Shows a random inspiring quote')
-	async def get_quote(self,ctx):		#Quotes
-		from bot_commands import zenquotes
-		quote=zenquotes.random_quote()
-		formatted_quote=quote['q']+" - "+quote['a']
-		await ctx.send(formatted_quote)
-
 	@commands.command(name='maths',help='+, -, /, //, *, **, ^ -> 2 numbers')
 	async def maths(self,ctx,*,args):		#Mathematical Calculations
 		from bot_commands import maths
@@ -55,23 +48,6 @@ class Commands(commands.Cog):
 				detembed.set_image(url=details['Poster'])
 
 			await ctx.send(embed=detembed)
-
-	@commands.command(name='wolfram',help='Answer queries')
-	async def wolfram(self,ctx,*,args=''):	#Wolfram
-		from bot_commands import wolfram
-		answer=wolfram.solve(args)
-		for ans in answer:
-			if ans['title'].lower()=='Input interpretation':
-				continue
-			emb1=discord.Embed(title=ans['title'])
-			for i in range(len(ans['image'])):
-				if i==0:
-					emb1.set_image(url=ans['image'][i])
-					await ctx.send(embed=emb1)
-				else:
-					emb=discord.Embed()
-					emb.set_image(url=ans['image'][i])
-					await ctx.send(embed=emb)
 		
 def setup(bot):
 	bot.add_cog(Commands(bot))
