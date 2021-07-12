@@ -48,6 +48,17 @@ class Commands(commands.Cog):
 				detembed.set_image(url=details['Poster'])
 
 			await ctx.send(embed=detembed)
+	
+	@commands.command(name='space',help='Space stuff')
+	async def space(self,ctx,date=""):
+		from bot_commands import nasa
+		details=nasa.apod(date)
+
+		emb=discord.Embed(title=details['title'], description=details['explanation'])
+		emb.set_image(url=details['hdurl'])
+		emb.set_footer(text=details['date'])
+
+		await ctx.send(embed=emb)
 		
 def setup(bot):
 	bot.add_cog(Commands(bot))
