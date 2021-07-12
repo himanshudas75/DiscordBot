@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-import re
 
 class Owner(commands.Cog):
 
@@ -42,7 +41,7 @@ class Owner(commands.Cog):
 				return
 		await ctx.send(f"User {member} is not banned")
 
-	@commands.command(name='status',help='Unban a user')
+	@commands.command(name='status',help='Change bot status')
 	@commands.check_any(commands.is_owner(),is_guild_owner())
 	async def status(self,ctx,status,*,game=None):
 		bot=self.bot
