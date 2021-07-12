@@ -3,10 +3,11 @@ import os
 import re
 import json
 import urllib.parse
-
-
 from dotenv import load_dotenv
-load_dotenv()
+
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(f'{FILE_PATH}/../env')
+
 KEY=os.getenv('OMDB_KEY')
 
 def omdb(t,y,typ):

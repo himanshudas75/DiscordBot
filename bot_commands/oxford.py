@@ -1,15 +1,13 @@
 import requests
 import json
 import os
-
 from dotenv import load_dotenv
-load_dotenv()
+
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(f'{FILE_PATH}/../env')
+
 app_id=os.getenv('OXFORD_APPID')
 app_key=os.getenv('OXFORD_APPKEY')
-'''
-app_id=os.environ['OXFORD_APPID']
-app_key=os.environ['OXFORD_APPKEY']
-'''
 
 def word_id_find(word_id,language='en'):
 	url='https://od-api.oxforddictionaries.com:443/api/v2/lemmas/' + language + '/' + word_id.lower()
