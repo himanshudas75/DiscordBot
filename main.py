@@ -1,10 +1,11 @@
 import discord
 import os
 from discord.ext import commands
-
-
 from dotenv import load_dotenv
-load_dotenv()
+
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+load_dotenv(f'{FILE_PATH}/env')
+
 TOKEN=os.getenv('DISCORD_TOKEN')
 GUILD=os.getenv('DISCORD_GUILD')
 
@@ -38,5 +39,5 @@ async def reload(ctx,extension):
 for filename in os.listdir('./cogs'):
 	if filename.endswith('.py'):
 		bot.load_extension(f'cogs.{filename[:-3]}')
-#keep_alive()
+
 bot.run(TOKEN)
