@@ -14,7 +14,7 @@ def apod(date):
     else:
         url=f'https://api.nasa.gov/planetary/apod?count=1&date={date}&api_key={NASA_KEY}'
     r=requests.get(url)
-    json_data=json.loads(r.text)
+    json_data=json.loads(r.text)[0]
     toret={
         "date": json_data['date'],
         "explanation": json_data['explanation'],
